@@ -8,7 +8,7 @@ export function Hero() {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1756245994848-1eb2be3b9b63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyd2FuZGElMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBsdXNoJTIwZ3JlZW4lMjB0ZWElMjBwbGFudGF0aW9ufGVufDF8fHx8MTc3MDIwMTA4Mnww&ixlib=rb-4.1.0&q=80&w=1920')", // Used the high res version implicitly by not restricting size too much in my head, but sticking to the URL provided
+          backgroundImage: "url('https://images.unsplash.com/photo-1756245994848-1eb2be3b9b63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyd2FuZGElMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBsdXNoJTIwZ3JlZW4lMjB0ZWElMjBwbGFudGF0aW9ufGVufDF8fHx8MTc3MDIwMTA4Mnww&ixlib=rb-4.1.0&q=80&w=1920')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -51,12 +51,12 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <button className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white rounded-full font-bold text-lg transition-all hover:scale-105 flex items-center justify-center gap-2">
+          <a href="#destinations" className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white rounded-full font-bold text-lg transition-all hover:scale-105 flex items-center justify-center gap-2">
             Explore Destinations <ArrowRight className="w-5 h-5" />
-          </button>
-          <button className="px-8 py-4 bg-white hover:bg-gray-100 text-gray-900 rounded-full font-bold text-lg transition-all hover:scale-105">
+          </a>
+          <a href="#packages" className="px-8 py-4 bg-white hover:bg-gray-100 text-gray-900 rounded-full font-bold text-lg transition-all hover:scale-105 inline-flex items-center justify-center">
             View Packages
-          </button>
+          </a>
         </motion.div>
       </div>
       

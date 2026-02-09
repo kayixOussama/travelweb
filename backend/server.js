@@ -24,6 +24,7 @@ async function startServer() {
     });
   } catch (err) {
     console.error("Startup error:", err);
+    process.exit(1);
   }
 }
 

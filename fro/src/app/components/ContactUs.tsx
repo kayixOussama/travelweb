@@ -18,8 +18,7 @@ export function ContactUs() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  const onSubmit = async (data: FormData) => {
-    // Simulate network request
+  const onSubmit = async (_data: FormData) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     toast.success("Message sent successfully! We'll get back to you shortly.");
     reset();

@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Shield, Heart, Map } from "lucide-react";
+import { Shield, Heart } from "lucide-react";
 
 export function AboutUs() {
   return (
@@ -69,9 +69,9 @@ export function AboutUs() {
               </div>
             </div>
 
-            <button className="px-8 py-3 bg-gray-900 hover:bg-green-600 text-white rounded-xl font-medium transition-colors duration-300 shadow-lg hover:shadow-xl">
+            <a href="#contact" className="inline-block px-8 py-3 bg-gray-900 hover:bg-green-600 text-white rounded-xl font-medium transition-colors duration-300 shadow-lg hover:shadow-xl">
               Learn More About Us
-            </button>
+            </a>
           </motion.div>
         </div>
       </div>

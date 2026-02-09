@@ -1,9 +1,31 @@
 import { Menu, X, Globe } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
+
+const SECRET_CLICKS = 5;
+const CLICK_TIMEOUT = 2000;
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const clickCount = useRef(0);
+  const clickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navigate = useNavigate();
+
+  const handleLogoClick = useCallback(() => {
+    clickCount.current += 1;
+
+    if (clickTimer.current) clearTimeout(clickTimer.current);
+    clickTimer.current = setTimeout(() => {
+      clickCount.current = 0;
+    }, CLICK_TIMEOUT);
+
+    if (clickCount.current >= SECRET_CLICKS) {
+      clickCount.current = 0;
+      if (clickTimer.current) clearTimeout(clickTimer.current);
+      navigate("/admin");
+    }
+  }, [navigate]);
 
   const navLinks = [
     { name: "Destinations", href: "#destinations" },
@@ -16,12 +38,16 @@ export function Navbar() {
     <nav className="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <div className="flex-shrink-0 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleLogoClick}
+            className="flex-shrink-0 flex items-center gap-2 cursor-pointer select-none bg-transparent border-none p-0"
+          >
             <Globe className="h-8 w-8 text-green-600" />
             <span className="font-bold text-2xl text-gray-900 tracking-tight">
               Has<span className="text-green-600">hem</span>
             </span>
-          </div>
+          </button>
           
           <div className="hidden md:flex space-x-8">
             {navLinks.map((link) => (

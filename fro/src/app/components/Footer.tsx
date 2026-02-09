@@ -79,7 +79,6 @@ export function Footer() {
           <div className="flex space-x-6 text-sm text-gray-500">
             <a href="#" className="hover:text-white">Privacy Policy</a>
             <a href="#" className="hover:text-white">Terms of Service</a>
-            <a href="/admin" className="hover:text-white opacity-50 hover:opacity-100">Admin</a>
           </div>
         </div>
       </div>
