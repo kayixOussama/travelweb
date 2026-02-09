@@ -6,12 +6,13 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "node server.js"
+    "dev": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.6",
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
     "pg": "^8.18.0"

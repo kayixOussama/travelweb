@@ -1,57 +1,108 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Destination, Package, initialDestinations, initialPackages } from '../data/mockData';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { Destination, Package } from '../data/mockData';
+
+const API_URL = 'http://localhost:5000/api';
 
 type DataContextType = {
   destinations: Destination[];
   packages: Package[];
-  addDestination: (destination: Destination) => void;
-  updateDestination: (destination: Destination) => void;
-  deleteDestination: (id: number) => void;
-  addPackage: (pkg: Package) => void;
-  updatePackage: (pkg: Package) => void;
-  deletePackage: (id: number) => void;
+  loading: boolean;
+  addDestination: (destination: Omit<Destination, 'id'>) => Promise<void>;
+  updateDestination: (destination: Destination) => Promise<void>;
+  deleteDestination: (id: number) => Promise<void>;
+  addPackage: (pkg: Omit<Package, 'id'>) => Promise<void>;
+  updatePackage: (pkg: Package) => Promise<void>;
+  deletePackage: (id: number) => Promise<void>;
 };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export function DataProvider({ children }: { children: ReactNode }) {
-  const [destinations, setDestinations] = useState<Destination[]>(initialDestinations);
-  const [packages, setPackages] = useState<Package[]>(initialPackages);
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const addDestination = (destination: Destination) => {
-    setDestinations([...destinations, { ...destination, id: Date.now() }]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [destRes, pkgRes] = await Promise.all([
+          fetch(`${API_URL}/destinations`),
+          fetch(`${API_URL}/packages`),
+        ]);
+        const destJson = await destRes.json();
+        const pkgJson = await pkgRes.json();
+        setDestinations(destJson.data);
+        setPackages(pkgJson.data);
+      } catch (err) {
+        console.error('Failed to fetch data:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const addDestination = async (destination: Omit<Destination, 'id'>) => {
+    const res = await fetch(`${API_URL}/destinations`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(destination),
+    });
+    const { data } = await res.json();
+    setDestinations((prev) => [...prev, data]);
   };
 
-  const updateDestination = (updatedDestination: Destination) => {
-    setDestinations(destinations.map(d => d.id === updatedDestination.id ? updatedDestination : d));
+  const updateDestination = async (destination: Destination) => {
+    const res = await fetch(`${API_URL}/destinations/${destination.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(destination),
+    });
+    const { data } = await res.json();
+    setDestinations((prev) => prev.map((d) => (d.id === data.id ? data : d)));
   };
 
-  const deleteDestination = (id: number) => {
-    setDestinations(destinations.filter(d => d.id !== id));
+  const deleteDestination = async (id: number) => {
+    await fetch(`${API_URL}/destinations/${id}`, { method: 'DELETE' });
+    setDestinations((prev) => prev.filter((d) => d.id !== id));
   };
 
-  const addPackage = (pkg: Package) => {
-    setPackages([...packages, { ...pkg, id: Date.now() }]);
+  const addPackage = async (pkg: Omit<Package, 'id'>) => {
+    const res = await fetch(`${API_URL}/packages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(pkg),
+    });
+    const { data } = await res.json();
+    setPackages((prev) => [...prev, data]);
   };
 
-  const updatePackage = (updatedPackage: Package) => {
-    setPackages(packages.map(p => p.id === updatedPackage.id ? updatedPackage : p));
+  const updatePackage = async (pkg: Package) => {
+    const res = await fetch(`${API_URL}/packages/${pkg.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(pkg),
+    });
+    const { data } = await res.json();
+    setPackages((prev) => prev.map((p) => (p.id === data.id ? data : p)));
   };
 
-  const deletePackage = (id: number) => {
-    setPackages(packages.filter(p => p.id !== id));
+  const deletePackage = async (id: number) => {
+    await fetch(`${API_URL}/packages/${id}`, { method: 'DELETE' });
+    setPackages((prev) => prev.filter((p) => p.id !== id));
   };
 
   return (
-    <DataContext.Provider value={{ 
-      destinations, 
-      packages, 
-      addDestination, 
-      updateDestination, 
+    <DataContext.Provider value={{
+      destinations,
+      packages,
+      loading,
+      addDestination,
+      updateDestination,
       deleteDestination,
       addPackage,
       updatePackage,
-      deletePackage
+      deletePackage,
     }}>
       {children}
     </DataContext.Provider>

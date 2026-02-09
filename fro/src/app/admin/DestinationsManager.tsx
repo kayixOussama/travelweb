@@ -12,15 +12,19 @@ export function DestinationsManager() {
 
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<Destination>();
 
-  const onSubmit = (data: Destination) => {
-    if (editingId) {
-      updateDestination({ ...data, id: editingId });
-      toast.success("Destination updated successfully");
-    } else {
-      addDestination(data);
-      toast.success("Destination added successfully");
+  const onSubmit = async (data: Destination) => {
+    try {
+      if (editingId) {
+        await updateDestination({ ...data, id: editingId });
+        toast.success("Destination updated successfully");
+      } else {
+        await addDestination(data);
+        toast.success("Destination added successfully");
+      }
+      closeForm();
+    } catch {
+      toast.error("Something went wrong");
     }
-    closeForm();
   };
 
   const handleEdit = (dest: Destination) => {
@@ -33,10 +37,14 @@ export function DestinationsManager() {
     setValue("description", dest.description);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this destination?")) {
-      deleteDestination(id);
-      toast.success("Destination deleted");
+      try {
+        await deleteDestination(id);
+        toast.success("Destination deleted");
+      } catch {
+        toast.error("Failed to delete destination");
+      }
     }
   };
 

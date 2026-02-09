@@ -16,11 +16,10 @@ export function PackagesManager() {
 
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<PackageFormData>();
 
-  const onSubmit = (data: PackageFormData) => {
+  const onSubmit = async (data: PackageFormData) => {
     const features = data.featuresString.split(',').map(f => f.trim()).filter(f => f.length > 0);
-    
-    const pkgData: Package = {
-      id: editingId || Date.now(),
+
+    const pkgData = {
       name: data.name,
       price: data.price,
       duration: data.duration,
@@ -28,14 +27,18 @@ export function PackagesManager() {
       features: features
     };
 
-    if (editingId) {
-      updatePackage(pkgData);
-      toast.success("Package updated successfully");
-    } else {
-      addPackage(pkgData);
-      toast.success("Package added successfully");
+    try {
+      if (editingId) {
+        await updatePackage({ ...pkgData, id: editingId });
+        toast.success("Package updated successfully");
+      } else {
+        await addPackage(pkgData);
+        toast.success("Package added successfully");
+      }
+      closeForm();
+    } catch {
+      toast.error("Something went wrong");
     }
-    closeForm();
   };
 
   const handleEdit = (pkg: Package) => {
@@ -48,10 +51,14 @@ export function PackagesManager() {
     setValue("featuresString", pkg.features.join(", "));
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this package?")) {
-      deletePackage(id);
-      toast.success("Package deleted");
+      try {
+        await deletePackage(id);
+        toast.success("Package deleted");
+      } catch {
+        toast.error("Failed to delete package");
+      }
     }
   };
 

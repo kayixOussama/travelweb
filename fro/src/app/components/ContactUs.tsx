@@ -21,8 +21,6 @@ export function ContactUs() {
   const onSubmit = async (data: FormData) => {
     // Simulate network request
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    console.log("Form Data:", data);
     toast.success("Message sent successfully! We'll get back to you shortly.");
     reset();
   };

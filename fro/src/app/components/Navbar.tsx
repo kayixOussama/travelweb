@@ -1,4 +1,4 @@
-import { Menu, X, Globe, MapPin, Calendar, Phone } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 

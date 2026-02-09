@@ -1,0 +1,33 @@
+# =========================
+# Temp / tool-generated files
+# =========================
+nul
+tmpclaude-*
+
+# =========================
+# Dependencies
+# =========================
+node_modules/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE & Editor files
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
