@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import pool from "./config/db.js";
 import travelRoutes from "./routes/travel.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api", travelRoutes);
+app.use("/api/auth", authRoutes);
 
 async function startServer() {
   try {

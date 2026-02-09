@@ -1,10 +1,18 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { LayoutDashboard, Map, Package, ArrowLeft, Menu, X } from "lucide-react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { LayoutDashboard, Map, Package, ArrowLeft, Menu, X, LogOut } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export function AdminLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   const navItems = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
@@ -39,7 +47,10 @@ export function AdminLayout() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-800">
+        <div className="p-4 border-t border-gray-800 space-y-2">
+          {user && (
+            <p className="px-4 text-xs text-gray-500 truncate">Signed in as <span className="text-green-400">{user.name}</span></p>
+          )}
           <Link 
             to="/" 
             className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors text-sm"
@@ -47,6 +58,13 @@ export function AdminLayout() {
             <ArrowLeft className="w-4 h-4" />
             Back to Website
           </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-red-400 hover:bg-gray-800 rounded-lg transition-colors text-sm w-full"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
         </div>
       </aside>
 
@@ -81,6 +99,13 @@ export function AdminLayout() {
               <ArrowLeft className="w-5 h-5" />
               Back to Website
             </Link>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-3 text-red-400"
+            >
+              <LogOut className="w-5 h-5" />
+              Logout
+            </button>
            </nav>
         </div>
       )}

@@ -23,7 +23,7 @@ export function Navbar() {
     if (clickCount.current >= SECRET_CLICKS) {
       clickCount.current = 0;
       if (clickTimer.current) clearTimeout(clickTimer.current);
-      navigate("/admin");
+      navigate("/login");
     }
   }, [navigate]);
 
