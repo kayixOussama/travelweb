@@ -18,10 +18,32 @@ export function ContactUs() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  const onSubmit = async (_data: FormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    toast.success("Message sent successfully! We'll get back to you shortly.");
-    reset();
+  const WHATSAPP_NUMBER = "250781411592";
+
+  const onSubmit = async (data: FormData) => {
+    // Build WhatsApp URL before the async call to keep user-gesture context
+    const text = `Hi, I'm *${data.name}*\n📧 ${data.email}\n📌 Subject: ${data.subject}\n\n${data.message}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(text)}`;
+
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Failed to send message");
+
+      toast.success("Message saved! Redirecting to WhatsApp...");
+      reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
+      return; // Don't redirect if save failed
+    }
+
+    // Redirect via location.href instead of window.open to avoid popup blockers
+    window.location.href = whatsappUrl;
   };
 
   return (

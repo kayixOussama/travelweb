@@ -10,6 +10,8 @@ import {
   addPackage,
   editPackage,
   removePackage,
+  submitContactMessage,
+  getContactMessages,
 } from "../controllers/travel.controller.js";
 
 const router = Router();
@@ -27,5 +29,9 @@ router.get("/packages/:id", getPackage);
 router.post("/packages", addPackage);
 router.put("/packages/:id", editPackage);
 router.delete("/packages/:id", removePackage);
+
+// Contact Messages
+router.post("/contact", submitContactMessage);
+router.get("/contact", getContactMessages);
 
 export default router;

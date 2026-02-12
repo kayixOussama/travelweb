@@ -14,6 +14,11 @@ import {
   deletePackage,
 } from "../queries/packagesQueries.js";
 
+import {
+  createContactMessage,
+  getAllContactMessages,
+} from "../queries/contactQueries.js";
+
 // ─── Destinations ───
 
 export const getDestinations = async (req, res) => {
@@ -133,5 +138,31 @@ export const removePackage = async (req, res) => {
   } catch (err) {
     console.error("removePackage error:", err);
     res.status(500).json({ error: "Failed to delete package" });
+  }
+};
+
+// ─── Contact Messages ───
+
+export const submitContactMessage = async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+    const saved = await createContactMessage({ name, email, subject, message });
+    res.status(201).json({ data: saved });
+  } catch (err) {
+    console.error("submitContactMessage error:", err);
+    res.status(500).json({ error: "Failed to save contact message" });
+  }
+};
+
+export const getContactMessages = async (req, res) => {
+  try {
+    const rows = await getAllContactMessages();
+    res.status(200).json({ data: rows });
+  } catch (err) {
+    console.error("getContactMessages error:", err);
+    res.status(500).json({ error: "Failed to fetch contact messages" });
   }
 };
