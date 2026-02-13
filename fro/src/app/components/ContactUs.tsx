@@ -81,7 +81,7 @@ export function ContactUs() {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900 text-lg">Call Us</h4>
-                  <p className="text-gray-600">+250 788 123 456</p>
+                  <p className="text-gray-600">+250 781 411 592</p>
                   <p className="text-gray-500 text-sm">Mon - Sat: 8am - 6pm</p>
                 </div>
               </div>
@@ -92,8 +92,7 @@ export function ContactUs() {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900 text-lg">Email Us</h4>
-                  <p className="text-gray-600">hello@discoverrwanda.com</p>
-                  <p className="text-gray-600">bookings@discoverrwanda.com</p>
+                  <p className="text-gray-600">aboubakarmukunzi@gmail.com</p>
                 </div>
               </div>
             </div>

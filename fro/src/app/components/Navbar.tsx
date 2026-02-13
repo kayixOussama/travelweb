@@ -1,4 +1,4 @@
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
@@ -35,18 +35,19 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <nav className="fixed w-full z-50 bg-white/100 backdrop-blur-md shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <button
             type="button"
             onClick={handleLogoClick}
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer select-none bg-transparent border-none p-0"
+            className="flex-shrink-0 flex items-center cursor-pointer select-none bg-transparent border-none p-0"
           >
-            <Globe className="h-8 w-8 text-green-600" />
-            <span className="font-bold text-2xl text-gray-900 tracking-tight">
-              Has<span className="text-green-600">hem</span>
-            </span>
+            <img
+              src="https://fwnlbokaueygkmzthrsx.supabase.co/storage/v1/object/public/asset-public/hashem_logo.PNG"
+              alt="Hashem Tours & Safaris"
+              className="h-16 w-auto object-contain"
+            />
           </button>
           
           <div className="hidden md:flex space-x-8">
@@ -62,7 +63,10 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:flex">
-             <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full font-medium transition-colors">
+             <button
+                onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full font-medium transition-colors"
+             >
                 Book Now
              </button>
           </div>
@@ -98,7 +102,13 @@ export function Navbar() {
                 </a>
               ))}
               <div className="pt-4">
-                 <button className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-medium transition-colors">
+                 <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-medium transition-colors"
+                 >
                     Book Now
                  </button>
               </div>

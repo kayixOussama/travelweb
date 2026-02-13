@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Instagram, Mail, Phone, MapPin } from "lucide-react";
 
 export function Footer() {
   return (
@@ -9,20 +9,14 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-6">
               <span className="font-bold text-2xl tracking-tight">
-                Discover<span className="text-green-500">Rwanda</span>
+                Hashem<span className="text-green-500"> Tours & Safaris</span>
               </span>
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
               We specialize in creating unforgettable experiences in the Land of a Thousand Hills. From gorilla trekking to cultural immersions, let us guide you.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition-all">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition-all">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition-all">
+              <a href="https://www.instagram.com/hashem_tours?igsh=bDIzbGtiN2Zqdmd2&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition-all">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -62,11 +56,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-400">
                 <Phone className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span>+250 788 123 456</span>
+                <span>+250 781 411 592</span>
               </li>
               <li className="flex items-center gap-3 text-gray-400">
                 <Mail className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <span>hello@discoverrwanda.com</span>
+                <span>aboubakarmukunzi@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -74,7 +68,7 @@ export function Footer() {
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Discover Rwanda. All rights reserved.
+            © {new Date().getFullYear()} Hashem Tours & Safaris. All rights reserved.
           </p>
           <div className="flex space-x-6 text-sm text-gray-500">
             <a href="#" className="hover:text-white">Privacy Policy</a>
