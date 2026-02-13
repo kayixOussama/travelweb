@@ -1,7 +1,14 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Destination, Package } from '../data/mockData';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+function authHeaders() {
+  const token = localStorage.getItem('token');
+  return token
+    ? { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
+    : { 'Content-Type': 'application/json' };
+}
 
 type DataContextType = {
   destinations: Destination[];
@@ -45,7 +52,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const addDestination = async (destination: Omit<Destination, 'id'>) => {
     const res = await fetch(`${API_URL}/destinations`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify(destination),
     });
     const { data } = await res.json();
@@ -55,7 +62,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const updateDestination = async (destination: Destination) => {
     const res = await fetch(`${API_URL}/destinations/${destination.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify(destination),
     });
     const { data } = await res.json();
@@ -63,14 +70,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
   };
 
   const deleteDestination = async (id: number) => {
-    await fetch(`${API_URL}/destinations/${id}`, { method: 'DELETE' });
+    await fetch(`${API_URL}/destinations/${id}`, { method: 'DELETE', headers: authHeaders() });
     setDestinations((prev) => prev.filter((d) => d.id !== id));
   };
 
   const addPackage = async (pkg: Omit<Package, 'id'>) => {
     const res = await fetch(`${API_URL}/packages`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify(pkg),
     });
     const { data } = await res.json();
@@ -80,7 +87,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const updatePackage = async (pkg: Package) => {
     const res = await fetch(`${API_URL}/packages/${pkg.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify(pkg),
     });
     const { data } = await res.json();
@@ -88,7 +95,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   };
 
   const deletePackage = async (id: number) => {
-    await fetch(`${API_URL}/packages/${id}`, { method: 'DELETE' });
+    await fetch(`${API_URL}/packages/${id}`, { method: 'DELETE', headers: authHeaders() });
     setPackages((prev) => prev.filter((p) => p.id !== id));
   };
 

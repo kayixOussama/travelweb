@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const AUTH_URL = `${API_URL}/auth`;
 
 type User = {
   id: number;
@@ -33,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const res = await fetch(`${API_URL}/verify`, {
+        const res = await fetch(`${AUTH_URL}/verify`, {
           headers: { Authorization: `Bearer ${stored}` },
         });
 
@@ -57,7 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (name: string, password: string) => {
-    const res = await fetch(`${API_URL}/login`, {
+    const res = await fetch(`${AUTH_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, password }),
@@ -75,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const register = async (name: string, password: string) => {
-    const res = await fetch(`${API_URL}/register`, {
+    const res = await fetch(`${AUTH_URL}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, password, role: "admin" }),
