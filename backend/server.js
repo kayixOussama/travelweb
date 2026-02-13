@@ -11,15 +11,14 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 // ─── CORS ───
-const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(",")
-  : ["*"];
+const corsOrigin = process.env.CORS_ORIGIN || "*";
 
 app.use(
   cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: corsOrigin === "*" ? true : corsOrigin.split(",").map(o => o.trim()),
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
