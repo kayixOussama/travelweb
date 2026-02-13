@@ -3,6 +3,8 @@ import { toast } from "sonner";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { motion } from "motion/react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 type FormData = {
   name: string;
   email: string;
@@ -26,7 +28,7 @@ export function ContactUs() {
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(text)}`;
 
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch(`${API_URL}/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
