@@ -1,0 +1,6 @@
+# Robots.txt for Hashem Tours & Safaris
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://hashemtours.com/sitemap.xml
