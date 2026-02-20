@@ -31,7 +31,7 @@ export function LandingPage() {
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                   <h3 className="text-4xl font-bold text-green-400 mb-2">10+</h3>
+                   <h3 className="text-4xl font-bold text-green-400 mb-2">2+</h3>
                    <p className="text-sm text-gray-300 uppercase tracking-wider">Years Experience</p>
                 </div>
                 <div>
